@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUMPR — Privacy Policy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-input: #1a1a26;
+    --accent: #ff6b2b;
+    --accent-glow: rgba(255, 107, 43, 0.15);
+    --text-primary: #f0f0f5;
+    --text-secondary: #8a8a9a;
+    --text-muted: #5a5a6a;
+    --border: #2a2a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,107,43,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,107,43,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-glow {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(255,107,43,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  .logo-section {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s ease;
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--accent), #ff8a55);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(255,107,43,0.25);
+  }
+
+  .logo-mark svg { width: 28px; height: 28px; fill: white; }
+
+  .logo-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .page-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .page-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .effective-date {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 4px 14px;
+    border-radius: 99px;
+    margin-top: 16px;
+  }
+
+  .policy-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .policy-card:nth-child(2) { animation-delay: 0.05s; }
+  .policy-card:nth-child(3) { animation-delay: 0.1s; }
+  .policy-card:nth-child(4) { animation-delay: 0.15s; }
+  .policy-card:nth-child(5) { animation-delay: 0.2s; }
+  .policy-card:nth-child(6) { animation-delay: 0.25s; }
+  .policy-card:nth-child(7) { animation-delay: 0.3s; }
+  .policy-card:nth-child(8) { animation-delay: 0.35s; }
+  .policy-card:nth-child(9) { animation-delay: 0.4s; }
+  .policy-card:nth-child(10) { animation-delay: 0.45s; }
+
+  .section-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .policy-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .policy-text strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .policy-text p { margin-bottom: 14px; }
+  .policy-text p:last-child { margin-bottom: 0; }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .data-item {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .data-item-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .data-item-value {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .highlight-box {
+    background: var(--accent-glow);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .contact-link {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .contact-link:hover { border-bottom-color: var(--accent); }
+
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-text {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .footer-text a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 40px 16px 60px; }
+    .policy-card { padding: 28px 20px; }
+    .data-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="logo-section">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 8 8.2 9.3 9.3 10.1L6 22L12 18L18 22L14.7 10.1C15.8 9.3 16.5 8 16.5 6.5C16.5 4 14.5 2 12 2ZM12 8.5C10.9 8.5 10 7.6 10 6.5C10 5.4 10.9 4.5 12 4.5C13.1 4.5 14 5.4 14 6.5C14 7.6 13.1 8.5 12 8.5Z"/>
+      </svg>
+    </div>
+    <div class="logo-text">JUMPR</div>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-subtitle">How we handle your data — transparently and respectfully.</p>
+    <span class="effective-date">Effective: April 1, 2026</span>
+  </div>
+
+  <!-- Sections -->
+  <div class="policy-card">
+    <div class="section-number">01 — Overview</div>
+    <h2 class="section-title">Introduction</h2>
+    <div class="policy-text">
+      <p>JUMPR ("we," "our," or "us") operates the JUMPR mobile application (the "App"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our App.</p>
+      <p>By using JUMPR, you agree to the collection and use of information in accordance with this policy. If you do not agree, please do not use the App.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">02 — Data collection</div>
+    <h2 class="section-title">Information we collect</h2>
+    <div class="policy-text">
+      <p>We collect the following types of information to provide and improve our services:</p>
+    </div>
+    <div class="data-grid">
+      <div class="data-item">
+        <div class="data-item-label">Account info</div>
+        <div class="data-item-value">Email, name, password</div>
+      </div>
+      <div class="data-item">
+        <div class="data-item-label">Profile data</div>
+        <div class="data-item-value">Position, shooting hand, experience level</div>
+      </div>
+      <div class="data-item">
+        <div class="data-item-label">Video recordings</div>
+        <div class="data-item-value">Jump shot videos submitted for analysis</div>
+      </div>
+      <div class="data-item">
+        <div class="data-item-label">Analysis data</div>
+        <div class="data-item-value">Form scores, detected issues, progress history</div>
+      </div>
+      <div class="data-item">
+        <div class="data-item-label">Usage data</div>
+        <div class="data-item-value">App interactions, drill completions, session frequency</div>
+      </div>
+      <div class="data-item">
+        <div class="data-item-label">Device info</div>
+        <div class="data-item-value">Device type, OS version, app version</div>
+      </div>
+    </div>
+    <div class="highlight-box">
+      We do not collect sensitive personal information such as health data, biometric identifiers for authentication, financial account numbers, or precise geolocation data.
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">03 — Usage</div>
+    <h2 class="section-title">How we use your information</h2>
+    <div class="policy-text">
+      <p><strong>To provide our core service:</strong> We process your video recordings to analyze basketball shooting form, generate form scores, detect biomechanical issues, and create personalized training drills.</p>
+      <p><strong>To personalize your experience:</strong> Your profile data and analysis history help us tailor drills, track your progress, and provide relevant coaching through our AI Coach feature.</p>
+      <p><strong>To improve our service:</strong> Aggregated and anonymized usage data helps us understand how players use JUMPR so we can improve the App's features, accuracy, and performance.</p>
+      <p><strong>To communicate with you:</strong> We may send you push notifications about training reminders, streak updates, and important service announcements. You can disable notifications at any time through your device settings.</p>
+      <p><strong>To process payments:</strong> Subscription management is handled through Apple App Store and Google Play. We do not directly collect or store your payment information.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">04 — Video data</div>
+    <h2 class="section-title">How we handle your videos</h2>
+    <div class="policy-text">
+      <p>Your video recordings are central to how JUMPR works. Here is exactly how we handle them:</p>
+      <p><strong>Processing:</strong> Videos you submit are processed by our AI analysis engine to evaluate shooting form. The analysis generates a form score, detected issues, and an annotated overlay video.</p>
+      <p><strong>Storage:</strong> Videos and analysis results are stored securely using Firebase Cloud Storage and Firestore, associated with your account. This allows you to access your shot history and track progress over time.</p>
+      <p><strong>Access:</strong> Only you can access your video recordings and analysis results through your account. Our development team may access anonymized data for the purpose of improving analysis accuracy.</p>
+    </div>
+    <div class="highlight-box">
+      We will never sell your video recordings to third parties, use them for advertising purposes, or share identifiable video content publicly without your explicit consent.
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">05 — AI coach</div>
+    <h2 class="section-title">AI Coach & conversations</h2>
+    <div class="policy-text">
+      <p>JUMPR includes an AI Coach feature powered by third-party AI services. When you use the AI Coach:</p>
+      <p><strong>Conversation data:</strong> Your messages and the AI Coach's responses may be processed by our AI service provider (Anthropic) to generate responses. Conversations may be stored to maintain chat history within your account.</p>
+      <p><strong>Player context:</strong> The AI Coach may reference your form score, detected issues, and training progress to provide personalized advice. This data is sent to the AI provider only during active conversations.</p>
+      <p><strong>No training on your data:</strong> Your conversations with the AI Coach are not used to train third-party AI models.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">06 — Third parties</div>
+    <h2 class="section-title">Third-party services</h2>
+    <div class="policy-text">
+      <p>We use the following third-party services to operate JUMPR:</p>
+      <p><strong>Firebase (Google):</strong> Authentication, database (Firestore), and cloud storage for app data and video files. Subject to <a href="https://firebase.google.com/support/privacy" class="contact-link">Google's Privacy Policy</a>.</p>
+      <p><strong>Anthropic:</strong> AI language model provider for the AI Coach feature. Subject to <a href="https://www.anthropic.com/privacy" class="contact-link">Anthropic's Privacy Policy</a>.</p>
+      <p><strong>RevenueCat:</strong> Subscription and in-app purchase management. Subject to <a href="https://www.revenuecat.com/privacy" class="contact-link">RevenueCat's Privacy Policy</a>.</p>
+      <p><strong>Apple App Store / Google Play:</strong> Payment processing for subscriptions is handled entirely by these platforms. We do not collect or store your payment card information.</p>
+      <p>We do not sell your personal information to any third party.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">07 — Security</div>
+    <h2 class="section-title">Data security</h2>
+    <div class="policy-text">
+      <p>We take reasonable measures to protect your personal information, including:</p>
+      <p><strong>Encryption:</strong> Data is encrypted in transit using TLS/SSL and at rest using Firebase's built-in encryption.</p>
+      <p><strong>Authentication:</strong> Access to your account is protected by Firebase Authentication with secure session management.</p>
+      <p><strong>Access controls:</strong> Only authorized team members have access to backend systems, and access is limited to what is necessary for service operation.</p>
+      <p>While we strive to protect your data, no method of electronic storage or transmission is 100% secure. We cannot guarantee absolute security.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">08 — Your rights</div>
+    <h2 class="section-title">Your rights & choices</h2>
+    <div class="policy-text">
+      <p><strong>Access your data:</strong> You can view your profile information, analysis history, and training data within the App at any time.</p>
+      <p><strong>Delete your account:</strong> You can request deletion of your account and all associated data (including videos and analysis history) through the App's Settings screen or by contacting us at <a href="mailto:ryx1014@gmail.com" class="contact-link">ryx1014@gmail.com</a>. We will process deletion requests within 30 days.</p>
+      <p><strong>Manage notifications:</strong> You can enable or disable push notifications through your device settings or within the App.</p>
+      <p><strong>Cancel subscription:</strong> You can cancel your subscription at any time through the App Store (iOS) or Google Play (Android).</p>
+      <p><strong>Data portability:</strong> You may request a copy of your personal data by contacting us.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">09 — Children</div>
+    <h2 class="section-title">Children's privacy</h2>
+    <div class="policy-text">
+      <p>JUMPR is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that we have collected personal information from a child under 13, we will take steps to delete that information promptly.</p>
+      <p>If you are a parent or guardian and believe your child has provided us with personal information, please contact us at <a href="mailto:ryx1014@gmail.com" class="contact-link">ryx1014@gmail.com</a>.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">10 — Changes</div>
+    <h2 class="section-title">Changes to this policy</h2>
+    <div class="policy-text">
+      <p>We may update this Privacy Policy from time to time. When we do, we will revise the "Effective" date at the top of this page and notify users through the App where appropriate.</p>
+      <p>We encourage you to review this Privacy Policy periodically to stay informed about how we protect your information.</p>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <div class="section-number">11 — Contact</div>
+    <h2 class="section-title">Contact us</h2>
+    <div class="policy-text">
+      <p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:</p>
+      <p><strong>Email:</strong> <a href="mailto:ryx1014@gmail.com" class="contact-link">ryx1014@gmail.com</a></p>
+      <p><strong>Support:</strong> <a href="http://support.getjumpr.ca" class="contact-link">support.getjumpr.ca</a></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p class="footer-text">© 2026 JUMPR. All rights reserved. | <a href="http://support.getjumpr.ca">Support</a></p>
+  </div>
+
+</div>
+
+</body>
+</html>

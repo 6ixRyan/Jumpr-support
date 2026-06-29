@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUMPR — Terms of Use</title>
+<meta name="description" content="The terms that govern your use of JUMPR.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0d; --panel:#141417; --panel2:#1b1b1f; --line:#27272e;
+    --ink:#f4f3f0; --muted:#9a9aa2; --faint:#5d5d66; --orange:#ff5a1f;
+    --orange-soft:rgba(255,90,31,.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  a{color:inherit}
+  a:visited{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(11,11,13,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+  .brand .mk{width:36px;height:36px;border-radius:9px;object-fit:cover;display:block;background:#000}
+  .brand .wm{font-family:'Saira Condensed';font-weight:800;font-size:21px;letter-spacing:.06em;text-transform:uppercase}
+  .links{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--muted)}
+  .links a{text-decoration:none}.links a:hover{color:var(--ink)}
+
+  .doc-head{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .crumbs{font-family:'Spline Sans Mono';font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:22px}
+  .crumbs a{color:var(--orange);text-decoration:none}
+  .doc-head h1{font-family:'Saira Condensed';font-weight:900;text-transform:uppercase;font-size:clamp(40px,6vw,68px);line-height:.94;letter-spacing:-.5px}
+  .doc-head .tag{font-family:'Fraunces';font-style:italic;font-weight:500;color:var(--muted);font-size:19px;margin-top:14px}
+  .stamp{display:inline-flex;gap:18px;margin-top:26px;flex-wrap:wrap}
+  .stamp span{font-family:'Spline Sans Mono';font-size:12px;color:var(--faint);border:1px solid var(--line);border-radius:99px;padding:6px 14px}
+  .stamp b{color:var(--orange);font-weight:500}
+
+  .doc{display:grid;grid-template-columns:210px 1fr;gap:64px;padding:48px 0 80px;align-items:start}
+  .toc{position:sticky;top:90px}
+  .toc h4{font-family:'Spline Sans Mono';font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+  .toc ol{list-style:none;counter-reset:t}
+  .toc li{counter-increment:t;margin-bottom:3px}
+  .toc a{display:flex;gap:10px;text-decoration:none;color:var(--muted);font-size:13.5px;padding:6px 0;line-height:1.35;transition:.15s}
+  .toc a::before{content:counter(t,decimal-leading-zero);font-family:'Spline Sans Mono';font-size:11px;color:var(--faint);flex-shrink:0}
+  .toc a:hover{color:var(--ink)}.toc a:hover::before{color:var(--orange)}
+
+  .body{max-width:720px}
+  .sec{padding:34px 0;border-bottom:1px solid var(--line)}
+  .sec:first-child{padding-top:0}
+  .sec:last-child{border-bottom:none}
+  .sec .num{font-family:'Spline Sans Mono';font-size:12px;letter-spacing:.16em;color:var(--orange);text-transform:uppercase;margin-bottom:12px}
+  .sec h2{font-family:'Fraunces';font-weight:600;font-size:27px;letter-spacing:-.3px;margin-bottom:16px;scroll-margin-top:90px}
+  .sec p{color:var(--muted);font-size:15.5px;line-height:1.8;margin-bottom:14px}
+  .sec p:last-child{margin-bottom:0}
+  .sec strong{color:var(--ink);font-weight:600}
+  .sec a{color:var(--orange);text-decoration:none;border-bottom:1px solid transparent;transition:.15s}
+  .sec a:hover{border-bottom-color:var(--orange)}
+  .sec ul{margin:6px 0 14px;padding-left:0;list-style:none}
+  .sec li{color:var(--muted);font-size:15.5px;line-height:1.7;margin-bottom:10px;padding-left:22px;position:relative}
+  .sec li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;background:var(--orange);border-radius:50%}
+
+  .callout{background:var(--orange-soft);border-left:2px solid var(--orange);border-radius:0 12px 12px 0;
+    padding:16px 20px;margin:18px 0;font-size:14.5px;line-height:1.7;color:var(--ink)}
+  .legal-note{font-size:13px;color:var(--faint);font-style:italic;margin-top:8px}
+
+  footer{border-top:1px solid var(--line);padding:42px 0;}
+  .foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;color:var(--faint);font-size:13px}
+  .foot a{color:var(--faint);text-decoration:none;margin-left:18px}.foot a:hover{color:var(--muted)}
+
+  @media(max-width:860px){
+    .doc{grid-template-columns:1fr;gap:32px}
+    .toc{position:static;border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--panel)}
+    .toc ol{columns:2;column-gap:24px}
+    .links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img class="mk" src="jumpr-logo.png" alt="JUMPR logo">
+      <span class="wm">Jumpr</span>
+    </a>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="doc-head">
+    <div class="crumbs"><a href="index.html">JUMPR</a> &nbsp;/&nbsp; Legal &nbsp;/&nbsp; Terms of Use</div>
+    <h1>Terms of Use</h1>
+    <p class="tag">The agreement between you and JUMPR.</p>
+    <div class="stamp">
+      <span>EFFECTIVE <b>June 29, 2026</b></span>
+      <span>LAST UPDATED <b>June 29, 2026</b></span>
+      <span>VERSION <b>1.0</b></span>
+    </div>
+  </header>
+
+  <div class="doc">
+    <nav class="toc">
+      <h4>Contents</h4>
+      <ol>
+        <li><a href="#s1">Agreement to Terms</a></li>
+        <li><a href="#s2">Eligibility</a></li>
+        <li><a href="#s3">Your Account</a></li>
+        <li><a href="#s4">Subscriptions &amp; Billing</a></li>
+        <li><a href="#s5">License to Use</a></li>
+        <li><a href="#s6">Your Content</a></li>
+        <li><a href="#s7">Acceptable Use</a></li>
+        <li><a href="#s8">AI Features &amp; Accuracy</a></li>
+        <li><a href="#s9">Health &amp; Safety</a></li>
+        <li><a href="#s10">Intellectual Property</a></li>
+        <li><a href="#s11">Third-Party Services</a></li>
+        <li><a href="#s12">Disclaimers</a></li>
+        <li><a href="#s13">Limitation of Liability</a></li>
+        <li><a href="#s14">Indemnification</a></li>
+        <li><a href="#s15">Termination</a></li>
+        <li><a href="#s16">Changes</a></li>
+        <li><a href="#s17">Governing Law</a></li>
+        <li><a href="#s18">Contact</a></li>
+      </ol>
+    </nav>
+
+    <div class="body">
+      <section class="sec">
+        <div class="num">01</div>
+        <h2 id="s1">Agreement to Terms</h2>
+        <p>These Terms of Use ("Terms") form a binding agreement between you and JUMPR ("we," "our," or "us") and govern your access to and use of the JUMPR mobile application, websites, and related services (together, the "Service").</p>
+        <p>By creating an account, downloading the app, or otherwise using the Service, you agree to these Terms and to our <a href="privacy.html">Privacy Policy</a>. If you do not agree, do not use the Service.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">02</div>
+        <h2 id="s2">Eligibility</h2>
+        <p>You must be at least 13 years old to use JUMPR. If you are under the age of majority where you live, you may use the Service only with the involvement and consent of a parent or legal guardian, who agrees to be bound by these Terms.</p>
+        <p>By using the Service, you represent that you meet these requirements and that the information you provide is accurate.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">03</div>
+        <h2 id="s3">Your Account</h2>
+        <p>You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. Notify us promptly at <a href="mailto:ryx1014@gmail.com">ryx1014@gmail.com</a> if you suspect unauthorized use.</p>
+        <p>You agree to provide accurate account information and to keep it up to date. We may suspend or terminate accounts that contain false information or that are used in violation of these Terms.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">04</div>
+        <h2 id="s4">Subscriptions &amp; Billing</h2>
+        <p><strong>Paid plans.</strong> Some features require a paid subscription. Pricing and features are shown in the app before you purchase.</p>
+        <p><strong>Billing.</strong> Subscriptions are sold and processed through the Apple App Store or Google Play. Payment is charged to your store account at confirmation of purchase.</p>
+        <p><strong>Auto-renewal.</strong> Subscriptions renew automatically at the end of each billing period unless you cancel at least 24 hours before the period ends. Your store account is charged for renewal within 24 hours of the end of the current period.</p>
+        <p><strong>Cancellation.</strong> You can cancel any time through your App Store or Google Play account settings. Cancellation takes effect at the end of the current billing period, and you keep access until then.</p>
+        <p><strong>Refunds.</strong> Purchases are handled by the app stores, and refunds are subject to their policies. We do not separately collect or refund payments.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">05</div>
+        <h2 id="s5">License to Use the Service</h2>
+        <p>Subject to these Terms, we grant you a limited, personal, non-exclusive, non-transferable, revocable license to download and use the Service for your own non-commercial use.</p>
+        <p>You may not copy, modify, distribute, sell, lease, reverse-engineer, or attempt to extract the source code of the Service, except where such restriction is prohibited by law.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">06</div>
+        <h2 id="s6">Your Content</h2>
+        <p>"Your Content" means the videos, profile details, messages, and other materials you submit to the Service. You retain ownership of Your Content.</p>
+        <p>By submitting Your Content, you grant us a limited license to host, store, process, and analyze it solely to operate and improve the Service — for example, to run shot analysis, generate scores and drills, and maintain your history. This license ends when you delete the content or your account, except for anonymized data that no longer identifies you.</p>
+        <div class="callout">We will never sell Your Content or use identifiable video for advertising. See the <a href="privacy.html">Privacy Policy</a> for full detail on how your videos are handled.</div>
+        <p>You are responsible for Your Content and represent that you have the rights to submit it, and that it does not violate the rights of others or any law.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">07</div>
+        <h2 id="s7">Acceptable Use</h2>
+        <p>When using JUMPR, you agree not to:</p>
+        <ul>
+          <li>Use the Service for any unlawful purpose or in violation of these Terms;</li>
+          <li>Upload content you do not have the right to share, or that depicts other people without their consent;</li>
+          <li>Attempt to disrupt, overload, or gain unauthorized access to the Service or its systems;</li>
+          <li>Reverse-engineer, scrape, or build a competing product using the Service;</li>
+          <li>Misrepresent your identity or impersonate others.</li>
+        </ul>
+      </section>
+
+      <section class="sec">
+        <div class="num">08</div>
+        <h2 id="s8">AI Features &amp; Accuracy</h2>
+        <p>JUMPR uses automated pose detection and AI models to analyze shooting form and to power the AI Coach. These features produce estimates and suggestions, not certainties.</p>
+        <p>Form scores, detected issues, and AI Coach responses are provided for training and informational purposes only. They may contain errors and should not be treated as professional coaching, medical, or biomechanical advice. Always use your own judgment.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">09</div>
+        <h2 id="s9">Health &amp; Safety</h2>
+        <p>JUMPR involves physical activity. You participate at your own risk. Consult a qualified physician before beginning any new training program, especially if you have an injury or medical condition.</p>
+        <div class="callout">Stop immediately and seek medical attention if you experience pain, dizziness, or discomfort. JUMPR is not responsible for injuries arising from your use of the Service or from drills or feedback it provides.</div>
+      </section>
+
+      <section class="sec">
+        <div class="num">10</div>
+        <h2 id="s10">Intellectual Property</h2>
+        <p>The Service, including its software, design, branding, text, and graphics (excluding Your Content), is owned by JUMPR and protected by intellectual property laws. The JUMPR name and logo are our trademarks.</p>
+        <p>Nothing in these Terms grants you any right to use our trademarks or other intellectual property without our prior written permission.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">11</div>
+        <h2 id="s11">Third-Party Services</h2>
+        <p>The Service relies on third-party providers, including Firebase (Google) for infrastructure, Anthropic for AI, RevenueCat for subscription management, and the Apple App Store and Google Play for distribution and payments.</p>
+        <p>Your use of those services may be subject to their own terms and policies. We are not responsible for third-party services or their content.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">12</div>
+        <h2 id="s12">Disclaimers</h2>
+        <p>The Service is provided "as is" and "as available," without warranties of any kind, whether express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+        <p>We do not warrant that the Service will be uninterrupted, error-free, secure, or that analysis results will be accurate or meet your expectations.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">13</div>
+        <h2 id="s13">Limitation of Liability</h2>
+        <p>To the maximum extent permitted by law, JUMPR and its operator will not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of data, profits, or goodwill, arising out of or related to your use of the Service.</p>
+        <p>Our total liability for any claim relating to the Service will not exceed the greater of the amount you paid us in the twelve months before the claim, or CAD $50.</p>
+        <p class="legal-note">Some jurisdictions do not allow certain limitations, so some of the above may not apply to you.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">14</div>
+        <h2 id="s14">Indemnification</h2>
+        <p>You agree to indemnify and hold harmless JUMPR and its operator from any claims, damages, liabilities, and expenses (including reasonable legal fees) arising from Your Content, your use of the Service, or your violation of these Terms or the rights of any third party.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">15</div>
+        <h2 id="s15">Termination</h2>
+        <p>You may stop using the Service and delete your account at any time. We may suspend or terminate your access if you violate these Terms, if required by law, or if we discontinue the Service.</p>
+        <p>Sections that by their nature should survive termination — including content licenses for anonymized data, disclaimers, limitation of liability, and indemnification — will continue to apply.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">16</div>
+        <h2 id="s16">Changes to the Service &amp; Terms</h2>
+        <p>We may modify or discontinue features of the Service at any time. We may also update these Terms; when we do, we will revise the "Last updated" date above and, where appropriate, notify you in the app.</p>
+        <p>Your continued use of the Service after changes take effect constitutes acceptance of the updated Terms.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">17</div>
+        <h2 id="s17">Governing Law &amp; Disputes</h2>
+        <p>These Terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable there, without regard to conflict-of-law principles.</p>
+        <p>You agree that any dispute arising from these Terms or the Service will be subject to the exclusive jurisdiction of the courts located in Ontario, Canada, unless local consumer-protection law gives you the right to bring proceedings elsewhere.</p>
+      </section>
+
+      <section class="sec">
+        <div class="num">18</div>
+        <h2 id="s18">Contact</h2>
+        <p>Questions about these Terms? Reach us at:</p>
+        <p><strong>Email</strong> — <a href="mailto:ryx1014@gmail.com">ryx1014@gmail.com</a><br>
+        <strong>Support</strong> — <a href="support.html">support.getjumpr.ca</a></p>
+        <p class="legal-note">JUMPR is operated as a sole proprietorship registered in Ontario, Canada. [Confirm exact registered legal name — placeholder.]</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 JUMPR. All rights reserved.</span>
+    <span>
+      <a href="index.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

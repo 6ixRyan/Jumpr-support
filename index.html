@@ -3,536 +3,280 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JUMPR Support</title>
+<title>JUMPR — AI Jump Shot Analysis</title>
+<meta name="description" content="Film one jumper. JUMPR's AI grades your shooting form 0–100, finds the flaw, and builds the drill that fixes it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
-
-  :root {
-    --bg-primary: #0a0a0f;
-    --bg-card: #12121a;
-    --bg-input: #1a1a26;
-    --accent: #ff6b2b;
-    --accent-glow: rgba(255, 107, 43, 0.15);
-    --accent-hover: #ff8a55;
-    --text-primary: #f0f0f5;
-    --text-secondary: #8a8a9a;
-    --text-muted: #5a5a6a;
-    --border: #2a2a3a;
-    --success: #4ade80;
+  :root{
+    --bg:#0b0b0d; --panel:#141417; --panel2:#1b1b1f; --line:#27272e;
+    --ink:#f4f3f0; --muted:#8d8d96; --faint:#5d5d66; --orange:#ff5a1f;
+    --orange-soft:rgba(255,90,31,.12);
   }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  a{color:inherit}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px}
+  .mono{font-family:'Spline Sans Mono',monospace}
+  .serif{font-family:'Fraunces',serif}
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  /* ---- Top nav ---- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(11,11,13,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .brand .mk{width:38px;height:38px;border-radius:9px;object-fit:cover;display:block;background:#000}
+  .brand .wm{font-family:'Saira Condensed';font-weight:800;font-size:22px;letter-spacing:.06em;text-transform:uppercase}
+  .links{display:flex;gap:30px;font-size:14px;font-weight:500;color:var(--muted)}
+  .links a{text-decoration:none}.links a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:14px;
+    padding:11px 20px;border-radius:8px;transition:.18s}
+  .btn-primary{background:var(--orange);color:#0b0b0d}
+  .btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--orange)}
+  .btn.lg{padding:15px 26px;font-size:15px}
 
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  /* ---- Hero ---- */
+  .hero{padding:84px 0 72px}
+  .hero .grid{display:grid;grid-template-columns:1.25fr .85fr;gap:60px;align-items:center}
+  .eyebrow{font-family:'Fraunces';font-style:italic;font-weight:500;color:var(--orange);font-size:18px;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:30px;height:1px;background:var(--orange)}
+  h1{font-family:'Saira Condensed';font-weight:900;text-transform:uppercase;line-height:.92;
+    font-size:clamp(54px,7.6vw,98px);letter-spacing:-.5px}
+  h1 .em{font-family:'Fraunces';font-weight:500;font-style:italic;text-transform:none;color:var(--orange);letter-spacing:-1px}
+  .lede{font-size:19px;color:var(--muted);line-height:1.62;max-width:42ch;margin:26px 0 34px}
+  .cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .store{display:flex;gap:18px;margin-top:26px;color:var(--faint);font-size:13px}
+  .store b{color:var(--muted);font-weight:600}
 
-  .bg-grid {
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,107,43,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,107,43,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
+  /* score readout */
+  .readout{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .readout .head{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);
+    font-family:'Spline Sans Mono';font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.14em}
+  .live{display:flex;align-items:center;gap:7px;color:var(--orange)}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .score{padding:26px 24px 12px;display:flex;align-items:baseline;gap:12px}
+  .score .num{font-family:'Saira Condensed';font-weight:900;font-size:108px;line-height:.78}
+  .score .frac{font-family:'Spline Sans Mono';color:var(--faint);font-size:16px}
+  .score .delta{margin-left:auto;color:var(--orange);font-weight:600;font-size:13px;font-family:'Spline Sans Mono'}
+  .bars{padding:6px 24px 26px;display:grid;gap:15px}
+  .bar .top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-family:'Spline Sans Mono';letter-spacing:.04em}
+  .track{height:6px;background:#222228;border-radius:99px;overflow:hidden}
+  .fill{height:100%;background:var(--orange);border-radius:99px}
 
-  .bg-glow {
-    position: fixed;
-    top: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 600px;
-    background: radial-gradient(ellipse, rgba(255,107,43,0.08) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
+  /* ---- Section scaffolding ---- */
+  section.band{padding:78px 0;border-top:1px solid var(--line)}
+  .sec-label{font-family:'Spline Sans Mono';font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+  .sec-title{font-family:'Saira Condensed';font-weight:800;text-transform:uppercase;font-size:clamp(32px,4.4vw,52px);line-height:.98;letter-spacing:-.3px;max-width:18ch}
+  .sec-intro{color:var(--muted);font-size:17px;max-width:52ch;margin-top:18px;line-height:1.6}
 
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 60px 24px 80px;
-  }
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:46px;border-top:1px solid var(--line)}
+  .step{padding:34px 30px 30px;border-right:1px solid var(--line)}
+  .step:last-child{border-right:none}
+  .step .idx{font-family:'Saira Condensed';font-weight:900;font-size:40px;color:var(--faint);line-height:1}
+  .step h3{font-family:'Saira Condensed';font-weight:800;text-transform:uppercase;font-size:25px;margin:14px 0 9px}
+  .step p{color:var(--muted);font-size:15px;line-height:1.6}
 
-  /* Header */
-  .logo-section {
-    text-align: center;
-    margin-bottom: 56px;
-    animation: fadeDown 0.8s ease;
-  }
+  /* feature cards */
+  .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:46px}
+  .fcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px 28px;transition:.2s}
+  .fcard:hover{border-color:#3a3a44;transform:translateY(-2px)}
+  .fcard .ic{width:40px;height:40px;border-radius:10px;background:var(--orange-soft);display:grid;place-items:center;margin-bottom:18px}
+  .fcard .ic svg{width:21px;height:21px;stroke:var(--orange);fill:none;stroke-width:1.8}
+  .fcard h3{font-family:'Saira Condensed';font-weight:800;text-transform:uppercase;font-size:23px;margin-bottom:9px;letter-spacing:.01em}
+  .fcard p{color:var(--muted);font-size:15px;line-height:1.6}
 
-  .logo-mark {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, var(--accent), #ff8a55);
-    border-radius: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(255,107,43,0.25);
-  }
+  /* coach band */
+  .coach{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .quote{font-family:'Fraunces';font-style:italic;font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.4}
+  .quote .hl{color:var(--orange)}
+  .chat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .msg{margin-bottom:14px;display:flex}
+  .msg .bubble{padding:13px 16px;border-radius:14px;font-size:14px;line-height:1.5;max-width:80%}
+  .msg.them .bubble{background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:4px}
+  .msg.you{justify-content:flex-end}
+  .msg.you .bubble{background:var(--orange);color:#0b0b0d;border-bottom-right-radius:4px;font-weight:500}
 
-  .logo-mark svg {
-    width: 28px;
-    height: 28px;
-    fill: white;
-  }
+  /* CTA band */
+  .cta-band{text-align:center;padding:96px 0}
+  .cta-band h2{font-family:'Saira Condensed';font-weight:900;text-transform:uppercase;font-size:clamp(40px,6vw,76px);line-height:.95;letter-spacing:-.5px}
+  .cta-band h2 .em{font-family:'Fraunces';font-style:italic;font-weight:500;text-transform:none;color:var(--orange)}
+  .cta-band p{color:var(--muted);font-size:18px;margin:20px auto 34px;max-width:46ch}
 
-  .logo-text {
-    font-family: 'Space Mono', monospace;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-  }
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:48px 0 40px}
+  .foot{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .foot .brand .wm{font-size:20px}
+  .foot-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .fcol h4{font-family:'Spline Sans Mono';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+  .fcol a{display:block;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:10px}
+  .fcol a:hover{color:var(--ink)}
+  .legal{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--faint);font-size:13px}
+  .legal a{color:var(--faint);text-decoration:none}.legal a:hover{color:var(--muted)}
 
-  .page-title {
-    font-size: clamp(28px, 5vw, 40px);
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin-bottom: 12px;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .page-subtitle {
-    font-size: 16px;
-    color: var(--text-secondary);
-    font-weight: 300;
-    line-height: 1.6;
-  }
-
-  /* Quick Help Cards */
-  .quick-help {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 48px;
-    animation: fadeUp 0.8s ease 0.1s both;
-  }
-
-  .help-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    text-decoration: none;
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-
-  .help-card:hover {
-    border-color: var(--accent);
-    background: var(--accent-glow);
-    transform: translateY(-2px);
-  }
-
-  .help-card-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .help-card-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .help-card-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.4;
-  }
-
-  /* FAQ Section */
-  .faq-section {
-    margin-bottom: 48px;
-    animation: fadeUp 0.8s ease 0.2s both;
-  }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-
-  .faq-item {
-    border-bottom: 1px solid var(--border);
-    padding: 18px 0;
-    cursor: pointer;
-  }
-
-  .faq-question {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 15px;
-    font-weight: 500;
-  }
-
-  .faq-question span {
-    transition: transform 0.3s ease;
-    color: var(--text-muted);
-    font-size: 18px;
-  }
-
-  .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-  }
-
-  .faq-item.active .faq-answer {
-    max-height: 200px;
-    padding-top: 14px;
-  }
-
-  .faq-item.active .faq-question span {
-    transform: rotate(45deg);
-  }
-
-  /* Contact Form */
-  .form-section {
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
-  .form-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px 28px;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  .form-label {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-    letter-spacing: 0.3px;
-  }
-
-  .form-input,
-  .form-select,
-  .form-textarea {
-    width: 100%;
-    padding: 14px 16px;
-    background: var(--bg-input);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-family: 'Outfit', sans-serif;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    outline: none;
-  }
-
-  .form-input:focus,
-  .form-select:focus,
-  .form-textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-  }
-
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: var(--text-muted);
-  }
-
-  .form-select {
-    appearance: none;
-    cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a5a6a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-  }
-
-  .form-select option {
-    background: var(--bg-input);
-    color: var(--text-primary);
-  }
-
-  .form-textarea {
-    resize: vertical;
-    min-height: 130px;
-    line-height: 1.6;
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--accent), #ff8a55);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-family: 'Outfit', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 0.3px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .submit-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 32px rgba(255,107,43,0.35);
-  }
-
-  .submit-btn:active {
-    transform: translateY(0);
-  }
-
-  /* Success State */
-  .success-message {
-    display: none;
-    text-align: center;
-    padding: 48px 24px;
-  }
-
-  .success-message.show {
-    display: block;
-    animation: fadeUp 0.5s ease;
-  }
-
-  .success-icon {
-    width: 64px;
-    height: 64px;
-    background: rgba(74, 222, 128, 0.1);
-    border: 2px solid var(--success);
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    font-size: 28px;
-  }
-
-  .success-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .success-desc {
-    font-size: 15px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  /* Footer */
-  .footer {
-    text-align: center;
-    margin-top: 56px;
-    padding-top: 28px;
-    border-top: 1px solid var(--border);
-    animation: fadeUp 0.8s ease 0.4s both;
-  }
-
-  .footer-text {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .footer-text a {
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  /* Animations */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Mobile */
-  @media (max-width: 480px) {
-    .container { padding: 40px 16px 60px; }
-    .quick-help { grid-template-columns: 1fr; }
-    .form-card { padding: 28px 20px; }
+  @media(max-width:880px){
+    .hero .grid,.coach{grid-template-columns:1fr;gap:40px}
+    .steps,.feat-grid{grid-template-columns:1fr}
+    .step{border-right:none;border-bottom:1px solid var(--line)}
+    .links{display:none}
   }
 </style>
 </head>
 <body>
 
-<div class="bg-grid"></div>
-<div class="bg-glow"></div>
-
-<div class="container">
-
-  <!-- Header -->
-  <div class="logo-section">
-    <div class="logo-mark">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 8 8.2 9.3 9.3 10.1L6 22L12 18L18 22L14.7 10.1C15.8 9.3 16.5 8 16.5 6.5C16.5 4 14.5 2 12 2ZM12 8.5C10.9 8.5 10 7.6 10 6.5C10 5.4 10.9 4.5 12 4.5C13.1 4.5 14 5.4 14 6.5C14 7.6 13.1 8.5 12 8.5Z"/>
-      </svg>
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img class="mk" src="jumpr-logo.png" alt="JUMPR logo">
+      <span class="wm">Jumpr</span>
+    </a>
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#coach">AI Coach</a>
+      <a href="support.html">Support</a>
     </div>
-    <div class="logo-text">JUMPR</div>
-    <h1 class="page-title">How can we help?</h1>
-    <p class="page-subtitle">Get support with your account, app features, or training questions.</p>
+    <a class="btn btn-primary" href="#download">Get the App</a>
   </div>
+</nav>
 
-  <!-- Quick Help -->
-  <div class="quick-help">
-    <div class="help-card" onclick="selectTopic('Account & Login')">
-      <span class="help-card-icon">🔐</span>
-      <div class="help-card-title">Account & Login</div>
-      <div class="help-card-desc">Password, login issues, account settings</div>
-    </div>
-    <div class="help-card" onclick="selectTopic('Subscription & Billing')">
-      <span class="help-card-icon">💳</span>
-      <div class="help-card-title">Billing</div>
-      <div class="help-card-desc">Plans, payments, cancellations</div>
-    </div>
-    <div class="help-card" onclick="selectTopic('Shot Analysis')">
-      <span class="help-card-icon">🎯</span>
-      <div class="help-card-title">Shot Analysis</div>
-      <div class="help-card-desc">Recording, scores, feedback</div>
-    </div>
-    <div class="help-card" onclick="selectTopic('Bug Report')">
-      <span class="help-card-icon">🐛</span>
-      <div class="help-card-title">Bug Report</div>
-      <div class="help-card-desc">Something broken? Let us know</div>
-    </div>
-  </div>
-
-  <!-- FAQ -->
-  <div class="faq-section">
-    <div class="section-label">Common Questions</div>
-
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">How does the AI shot analysis work? <span>+</span></div>
-      <div class="faq-answer">Record a video of your jump shot from a side angle. Our AI analyzes your biomechanics — knee bend, set point, elbow alignment, release arc — and gives you a form score from 0–100 with specific feedback on what to improve.</div>
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Your jumper, broken down frame by frame</div>
+      <h1>Fix your<br><span class="em">jumper.</span></h1>
+      <p class="lede">Film one shot. JUMPR's AI grades your form 0–100, finds the single flaw holding you back, and builds the drill that fixes it.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary lg" href="#download">Download on iOS</a>
+        <a class="btn btn-ghost lg" href="#how">See how it works</a>
+      </div>
+      <div class="store">
+        <span><b>4.8★</b> App Store</span>
+        <span><b>0</b> sensors required</span>
+        <span><b>~15s</b> to a full breakdown</span>
+      </div>
     </div>
 
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">Can I cancel my subscription? <span>+</span></div>
-      <div class="faq-answer">Yes, you can cancel anytime. Go to Settings in the app or manage your subscription through the App Store (iOS) or Google Play (Android). You'll keep access until the end of your billing period.</div>
-    </div>
-
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">Why isn't my shot being detected? <span>+</span></div>
-      <div class="faq-answer">Make sure you're filming from the side (perpendicular to the shooter), your full body is visible, and there's only one person in the frame. Good lighting and a stable camera will also improve detection accuracy.</div>
-    </div>
-
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">How accurate is the form score? <span>+</span></div>
-      <div class="faq-answer">Our AI uses MediaPipe pose detection to track body landmarks and analyze key biomechanical factors. While no system is perfect, the scoring is consistent — meaning your progress over time is reliably tracked even if individual scores have small margins of error.</div>
-    </div>
-  </div>
-
-  <!-- Contact Form -->
-  <div class="form-section">
-    <div class="section-label">Still need help?</div>
-
-    <div class="form-card">
-      <form id="supportForm" action="https://formsubmit.co/ryx1014@gmail.com" method="POST">
-        <!-- FormSubmit config -->
-        <input type="hidden" name="_subject" value="JUMPR Support Request">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="_honey" style="display:none">
-        <input type="hidden" name="_next" id="redirectUrl">
-
-        <div class="form-group">
-          <label class="form-label">Your email</label>
-          <input type="email" name="email" class="form-input" placeholder="you@example.com" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Topic</label>
-          <select name="topic" class="form-select" id="topicSelect" required>
-            <option value="" disabled selected>Select a topic</option>
-            <option value="Account & Login">Account & Login</option>
-            <option value="Subscription & Billing">Subscription & Billing</option>
-            <option value="Shot Analysis">Shot Analysis</option>
-            <option value="Drills & Training">Drills & Training</option>
-            <option value="AI Coach">AI Coach</option>
-            <option value="Bug Report">Bug Report</option>
-            <option value="Feature Request">Feature Request</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">How can we help?</label>
-          <textarea name="message" class="form-textarea" placeholder="Describe your issue or question..." required></textarea>
-        </div>
-
-        <button type="submit" class="submit-btn">Send Message</button>
-      </form>
-
-      <div class="success-message" id="successMsg">
-        <div class="success-icon">✓</div>
-        <div class="success-title">Message sent!</div>
-        <div class="success-desc">We'll get back to you within 24 hours. Check your email for a confirmation.</div>
+    <div class="readout">
+      <div class="head"><span>SHOT BREAKDOWN</span><span class="live"><span class="pulse"></span>Analyzed</span></div>
+      <div class="score"><span class="num">94</span><span class="frac">/100</span><span class="delta">▲ +6 this week</span></div>
+      <div class="bars">
+        <div class="bar"><div class="top"><span>SET POINT</span><span>96</span></div><div class="track"><div class="fill" style="width:96%"></div></div></div>
+        <div class="bar"><div class="top"><span>ELBOW ALIGNMENT</span><span>91</span></div><div class="track"><div class="fill" style="width:91%"></div></div></div>
+        <div class="bar"><div class="top"><span>RELEASE ARC</span><span>88</span></div><div class="track"><div class="fill" style="width:88%"></div></div></div>
+        <div class="bar"><div class="top"><span>LANDING BALANCE</span><span>97</span></div><div class="track"><div class="fill" style="width:97%"></div></div></div>
       </div>
     </div>
   </div>
+</header>
 
-  <!-- Footer -->
-  <div class="footer">
-    <p class="footer-text">© 2026 JUMPR. All rights reserved.</p>
+<!-- HOW IT WORKS -->
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="sec-label">The method</div>
+    <h2 class="sec-title">Three steps. One better shot.</h2>
+    <div class="steps">
+      <div class="step"><div class="idx">01</div><h3>Record</h3><p>One side-angle clip of your jumper. No wearables, no markers, no setup — just your phone on a tripod or a friend filming.</p></div>
+      <div class="step"><div class="idx">02</div><h3>Analyze</h3><p>JUMPR tracks every joint a shooting coach watches — knee bend, set point, elbow, release arc — frame by frame.</p></div>
+      <div class="step"><div class="idx">03</div><h3>Improve</h3><p>You get an honest score, the one flaw limiting you most, and a drill built to correct exactly that.</p></div>
+    </div>
   </div>
+</section>
 
-</div>
+<!-- FEATURES -->
+<section class="band" id="features">
+  <div class="wrap">
+    <div class="sec-label">What's inside</div>
+    <h2 class="sec-title">A shooting coach in your pocket.</h2>
+    <div class="feat-grid">
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke-linecap="round"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>Form Score 0–100</h3>
+        <p>A single, consistent number for every shot, so progress is something you can actually see week over week.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 19V5m5 14V9m5 10V7m5 12V11" stroke-linecap="round"/></svg></div>
+        <h3>Progress History</h3>
+        <p>Every breakdown is saved. Watch your set point, arc, and balance trend up as you put in the reps.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Targeted Drills</h3>
+        <p>Drills aren't generic. They're chosen from your breakdown to attack the flaw costing you the most points.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V6a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" stroke-linejoin="round"/></svg></div>
+        <h3>AI Coach</h3>
+        <p>Ask why your shot is short or what to fix first. The coach answers using your actual form data.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<script>
-  // Set redirect URL to current page with success param
-  document.getElementById('redirectUrl').value = window.location.href.split('?')[0] + '?success=true';
+<!-- AI COACH -->
+<section class="band" id="coach">
+  <div class="wrap coach">
+    <div>
+      <div class="sec-label">AI Coach</div>
+      <p class="quote">It knows <span class="hl">your</span> shot — not a generic one. Ask anything, and the answer is built on your last breakdown.</p>
+    </div>
+    <div class="chat">
+      <div class="msg you"><div class="bubble">Why does my shot keep falling short?</div></div>
+      <div class="msg them"><div class="bubble">Your release arc is 38° — flat for your height. Lift your set point two inches and follow through up, not out. Try the High-Arc Form drill I added.</div></div>
+      <div class="msg you"><div class="bubble">Got it. How's my elbow?</div></div>
+      <div class="msg them"><div class="bubble">Tucked and tracking straight at 91. That's a strength — keep it.</div></div>
+    </div>
+  </div>
+</section>
 
-  // Check for success redirect
-  if (window.location.search.includes('success=true')) {
-    document.getElementById('supportForm').style.display = 'none';
-    document.getElementById('successMsg').classList.add('show');
-  }
+<!-- DOWNLOAD CTA -->
+<section class="cta-band" id="download">
+  <div class="wrap">
+    <h2>Stop guessing.<br>Start <span class="em">improving.</span></h2>
+    <p>Your first breakdown is free. Film a shot tonight and see your score in seconds.</p>
+    <a class="btn btn-primary lg" href="#">Download JUMPR on iOS</a>
+  </div>
+</section>
 
-  // FAQ toggle
-  function toggleFaq(el) {
-    el.classList.toggle('active');
-  }
-
-  // Quick help card -> select topic
-  function selectTopic(topic) {
-    document.getElementById('topicSelect').value = topic;
-    document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
-  }
-</script>
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="index.html">
+          <img class="mk" src="jumpr-logo.png" alt="JUMPR logo">
+          <span class="wm">Jumpr</span>
+        </a>
+        <p style="color:var(--faint);font-size:14px;margin-top:14px;max-width:30ch">AI jump-shot analysis for players who'd rather know than guess.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="fcol">
+          <h4>Product</h4>
+          <a href="#how">How it works</a>
+          <a href="#features">Features</a>
+          <a href="#coach">AI Coach</a>
+          <a href="#download">Download</a>
+        </div>
+        <div class="fcol">
+          <h4>Company</h4>
+          <a href="support.html">Support</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 JUMPR. All rights reserved.</span>
+      <span>JUMPR is a sole proprietorship registered in Ontario, Canada.</span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

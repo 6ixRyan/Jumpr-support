@@ -127,7 +127,7 @@
       <p class="lede">Give every athlete in your program access to JUMPR's AI shot analysis under one group key. Register below — we review each organization and activate it, usually within one business day.</p>
       <div class="perks">
         <div class="perk"><span class="dot">01</span><div><h3>One group key</h3><p>Your athletes download JUMPR and enter your key — no individual subscriptions to manage.</p></div></div>
-        <div class="perk"><span class="dot">02</span><div><h3>Seats that fit your roster</h3><p>Tell us how many athletes you have and we'll size your plan when we activate you.</p></div></div>
+        <div class="perk"><span class="dot">02</span><div><h3>Seats that fit your roster</h3><p>Pick how many athletes can join with your key — we confirm the count when we activate you.</p></div></div>
         <div class="perk"><span class="dot">03</span><div><h3>Manual review, real humans</h3><p>Every organization is verified before activation. We'll reach out at your contact email to confirm details and seats.</p></div></div>
       </div>
     </div>
@@ -144,9 +144,16 @@
           <input id="orgName" type="text" placeholder="e.g. Northside Elite Basketball" autocomplete="organization" maxlength="80" required>
         </div>
 
-        <div class="field">
-          <label for="orgLocation">Location</label>
-          <input id="orgLocation" type="text" placeholder="City, Province / State" autocomplete="address-level2" maxlength="120" required>
+        <div class="row2">
+          <div class="field">
+            <label for="orgLocation">Location</label>
+            <input id="orgLocation" type="text" placeholder="City, Province / State" autocomplete="address-level2" maxlength="120" required>
+          </div>
+          <div class="field">
+            <label for="seats">Players / seats</label>
+            <input id="seats" type="number" placeholder="e.g. 25" min="1" max="500" step="1" inputmode="numeric" required>
+            <p class="hint">How many athletes can register with your key (1–500).</p>
+          </div>
         </div>
 
         <div class="divider"></div>
@@ -258,12 +265,14 @@
 
     const name = document.getElementById("orgName").value.trim();
     const location = document.getElementById("orgLocation").value.trim();
+    const seats = parseInt(document.getElementById("seats").value, 10);
     const email = document.getElementById("email").value.trim();
     const pw = document.getElementById("pw").value;
     const pw2 = document.getElementById("pw2").value;
 
     if (name.length < 2) return showError("Please enter your organization's name.");
     if (!location) return showError("Please enter your organization's location.");
+    if (!Number.isInteger(seats) || seats < 1 || seats > 500) return showError("Players / seats must be between 1 and 500.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError("Please enter a valid contact email.");
     if (pw.length < 8) return showError("Password must be at least 8 characters.");
     if (pw !== pw2) return showError("Passwords don't match.");
@@ -301,7 +310,7 @@
         admin_uid: user.uid,
         plan_tier: "basic",
         active: false,          // activated manually after review
-        max_seats: 0,           // set manually at activation
+        max_seats: seats,       // requested roster size, confirmed at activation
         current_seats: 0,
         member_ids: [],
         expires_at: null,

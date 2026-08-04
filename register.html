@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register Your Organization — JUMPR</title>
+<meta name="description" content="Register your team, camp, or club with JUMPR and get your athletes access to AI jump-shot analysis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0d; --panel:#141417; --panel2:#1b1b1f; --line:#27272e;
+    --ink:#f4f3f0; --muted:#8d8d96; --faint:#5d5d66; --orange:#ff5a1f;
+    --orange-soft:rgba(255,90,31,.12); --red:#ff4d4d; --green:#3ecf72;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  a{color:inherit}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px}
+  .mono{font-family:'Spline Sans Mono',monospace}
+
+  /* ---- Top nav (same as index) ---- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(11,11,13,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .brand .mk{width:38px;height:38px;border-radius:9px;object-fit:cover;display:block;background:#000}
+  .brand .wm{font-family:'Saira Condensed';font-weight:800;font-size:22px;letter-spacing:.06em;text-transform:uppercase}
+  .links{display:flex;gap:30px;font-size:14px;font-weight:500;color:var(--muted)}
+  .links a{text-decoration:none}.links a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;font-weight:600;font-size:14px;
+    padding:11px 20px;border-radius:8px;transition:.18s;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+  .btn-primary{background:var(--orange);color:#0b0b0d}
+  .btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-primary:disabled{opacity:.55;cursor:not-allowed;transform:none;filter:none}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink);background:transparent}
+  .btn-ghost:hover{border-color:var(--orange)}
+  .btn.lg{padding:15px 26px;font-size:15px;width:100%}
+
+  /* ---- Page layout ---- */
+  .reg{padding:72px 0 96px}
+  .reg .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
+  .eyebrow{font-family:'Fraunces';font-style:italic;font-weight:500;color:var(--orange);font-size:18px;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:30px;height:1px;background:var(--orange)}
+  h1{font-family:'Saira Condensed';font-weight:900;text-transform:uppercase;line-height:.94;
+    font-size:clamp(42px,5.4vw,68px);letter-spacing:-.5px}
+  h1 .em{font-family:'Fraunces';font-weight:500;font-style:italic;text-transform:none;color:var(--orange);letter-spacing:-1px}
+  .lede{font-size:17px;color:var(--muted);line-height:1.62;max-width:44ch;margin:24px 0 34px}
+  .perks{display:grid;gap:18px;border-top:1px solid var(--line);padding-top:28px}
+  .perk{display:flex;gap:14px;align-items:flex-start}
+  .perk .dot{font-family:'Spline Sans Mono';font-size:12px;color:var(--orange);padding-top:3px}
+  .perk h3{font-family:'Saira Condensed';font-weight:800;text-transform:uppercase;font-size:19px;letter-spacing:.02em}
+  .perk p{color:var(--muted);font-size:14px;line-height:1.55;margin-top:3px}
+
+  /* ---- Form card ---- */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .card .head{display:flex;justify-content:space-between;align-items:center;padding:15px 24px;border-bottom:1px solid var(--line);
+    font-family:'Spline Sans Mono';font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.14em}
+  .card .head .st{color:var(--orange)}
+  .card .body{padding:28px 24px 26px}
+  .field{margin-bottom:18px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  label{display:block;font-family:'Spline Sans Mono';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--ink);
+    font-family:'Inter',sans-serif;font-size:15px;padding:12px 14px;outline:none;transition:border-color .15s}
+  input::placeholder{color:var(--faint)}
+  input:focus{border-color:var(--orange)}
+  .hint{font-size:12px;color:var(--faint);margin-top:6px}
+  .alert{display:none;border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.5;margin-bottom:18px}
+  .alert.err{display:block;background:rgba(255,77,77,.09);border:1px solid rgba(255,77,77,.35);color:#ffb3b3}
+  .divider{height:1px;background:var(--line);margin:8px 0 22px}
+  .fineprint{font-size:12px;color:var(--faint);line-height:1.6;margin-top:16px}
+  .fineprint a{color:var(--muted)}
+
+  /* ---- Success state ---- */
+  .success{display:none;padding:34px 28px 32px;text-align:left}
+  .success .check{width:44px;height:44px;border-radius:12px;background:rgba(62,207,114,.12);display:grid;place-items:center;margin-bottom:20px}
+  .success .check svg{width:22px;height:22px;stroke:var(--green);fill:none;stroke-width:2.2}
+  .success h2{font-family:'Saira Condensed';font-weight:800;text-transform:uppercase;font-size:30px;line-height:1;margin-bottom:10px}
+  .success p{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:16px}
+  .keybox{background:var(--panel2);border:1px dashed #3a3a44;border-radius:10px;padding:18px 20px;margin:22px 0;display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .keybox .k{font-family:'Spline Sans Mono';font-weight:600;font-size:22px;letter-spacing:.12em;color:var(--orange)}
+  .keybox button{white-space:nowrap}
+  .next{border-top:1px solid var(--line);margin-top:8px;padding-top:18px}
+  .next h4{font-family:'Spline Sans Mono';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  .next ol{margin-left:18px;color:var(--muted);font-size:14px;line-height:1.9}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0}
+  .legal{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--faint);font-size:13px}
+  .legal a{color:var(--faint);text-decoration:none}.legal a:hover{color:var(--muted)}
+
+  @media(max-width:880px){
+    .reg .grid{grid-template-columns:1fr;gap:44px}
+    .links{display:none}
+    .row2{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img class="mk" src="jumpr-logo.png" alt="JUMPR logo">
+      <span class="wm">Jumpr</span>
+    </a>
+    <div class="links">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#coach">AI Coach</a>
+      <a href="support.html">Support</a>
+    </div>
+    <a class="btn btn-primary" href="index.html#download">Get the App</a>
+  </div>
+</nav>
+
+<section class="reg">
+  <div class="wrap grid">
+
+    <!-- Left: pitch -->
+    <div>
+      <div class="eyebrow">For teams, camps &amp; clubs</div>
+      <h1>Register your<br><span class="em">organization.</span></h1>
+      <p class="lede">Give every athlete in your program access to JUMPR's AI shot analysis under one group key. Register below — we review each organization and activate it, usually within one business day.</p>
+      <div class="perks">
+        <div class="perk"><span class="dot">01</span><div><h3>One group key</h3><p>Your athletes download JUMPR and enter your key — no individual subscriptions to manage.</p></div></div>
+        <div class="perk"><span class="dot">02</span><div><h3>Seats that fit your roster</h3><p>Tell us how many athletes you have and we'll size your plan when we activate you.</p></div></div>
+        <div class="perk"><span class="dot">03</span><div><h3>Manual review, real humans</h3><p>Every organization is verified before activation. We'll reach out at your contact email to confirm details and seats.</p></div></div>
+      </div>
+    </div>
+
+    <!-- Right: form / success -->
+    <div class="card">
+      <div class="head"><span>ORGANIZATION SIGNUP</span><span class="st" id="stepLabel">Step 1 of 1</span></div>
+
+      <form class="body" id="regForm" novalidate>
+        <div class="alert err" id="errBox"></div>
+
+        <div class="field">
+          <label for="orgName">Organization name</label>
+          <input id="orgName" type="text" placeholder="e.g. Northside Elite Basketball" autocomplete="organization" maxlength="80" required>
+        </div>
+
+        <div class="field">
+          <label for="orgLocation">Location</label>
+          <input id="orgLocation" type="text" placeholder="City, Province / State" autocomplete="address-level2" maxlength="120" required>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label for="email">Contact email <span style="color:var(--faint);text-transform:none;letter-spacing:0">— this becomes your login</span></label>
+          <input id="email" type="email" placeholder="coach@yourprogram.com" autocomplete="email" required>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="pw">Password</label>
+            <input id="pw" type="password" placeholder="8+ characters" autocomplete="new-password" minlength="8" required>
+          </div>
+          <div class="field">
+            <label for="pw2">Confirm password</label>
+            <input id="pw2" type="password" placeholder="Repeat password" autocomplete="new-password" required>
+          </div>
+        </div>
+
+        <button class="btn btn-primary lg" id="submitBtn" type="submit">Register organization</button>
+        <p class="fineprint">By registering you agree to our <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>. Your organization starts in a pending state and is activated after a quick manual review.</p>
+      </form>
+
+      <div class="success" id="successBox">
+        <div class="check"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>Registration received</h2>
+        <p><span id="okOrgName" style="color:var(--ink);font-weight:600"></span> is registered and pending activation. We'll email <span id="okEmail" style="color:var(--ink);font-weight:600"></span> once your organization is verified and your seats are set up.</p>
+        <div class="keybox">
+          <div>
+            <div style="font-family:'Spline Sans Mono';font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:6px">Your group key</div>
+            <div class="k" id="okKey"></div>
+          </div>
+          <button class="btn btn-ghost" id="copyKey" type="button">Copy</button>
+        </div>
+        <div class="next">
+          <h4>What happens next</h4>
+          <ol>
+            <li>We verify your organization and confirm seat count by email.</li>
+            <li>Once activated, athletes enter your group key in the JUMPR app.</li>
+            <li>Everyone on your roster gets full analysis access.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap legal">
+    <span>© 2026 JUMPR. All rights reserved.</span>
+    <span><a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+  </div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+  import { getFirestore, collection, query, where, limit, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyCP6KhqvuhVN3KTPw3SRZgLHHjDlgVOAQw",
+    authDomain: "jumpr-app-b3350.firebaseapp.com",
+    projectId: "jumpr-app-b3350",
+    storageBucket: "jumpr-app-b3350.firebasestorage.app",
+    messagingSenderId: "186461306541",
+    appId: "1:186461306541:web:7ada79977619203f9d5024"
+  });
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const form = document.getElementById("regForm");
+  const errBox = document.getElementById("errBox");
+  const submitBtn = document.getElementById("submitBtn");
+
+  function showError(msg){ errBox.textContent = msg; errBox.classList.add("err"); errBox.style.display = "block"; }
+  function clearError(){ errBox.style.display = "none"; }
+
+  // Group key: derived from the org name + random suffix. Uppercase A–Z/0–9,
+  // 6–32 chars — must match the Firestore rules and the app's normalizeKey().
+  function makeGroupKey(name){
+    let base = name.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12);
+    if (base.length < 4) base = (base + "JUMPR").slice(0, 5);
+    const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+    let suffix = "";
+    const rnd = new Uint32Array(4);
+    crypto.getRandomValues(rnd);
+    for (const n of rnd) suffix += chars[n % chars.length];
+    return (base + suffix).slice(0, 32);
+  }
+
+  async function keyIsTaken(key){
+    const q = query(collection(db, "organizations"), where("group_key", "==", key), limit(1));
+    return !(await getDocs(q)).empty;
+  }
+
+  const AUTH_ERRORS = {
+    "auth/email-already-in-use": "An account with this email already exists. If it's yours and you're re-registering, use a different email or contact support.",
+    "auth/invalid-email": "That email address doesn't look valid.",
+    "auth/weak-password": "Password is too weak — use at least 8 characters.",
+    "auth/network-request-failed": "Network error — check your connection and try again.",
+    "auth/too-many-requests": "Too many attempts. Please wait a minute and try again."
+  };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearError();
+
+    const name = document.getElementById("orgName").value.trim();
+    const location = document.getElementById("orgLocation").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const pw = document.getElementById("pw").value;
+    const pw2 = document.getElementById("pw2").value;
+
+    if (name.length < 2) return showError("Please enter your organization's name.");
+    if (!location) return showError("Please enter your organization's location.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError("Please enter a valid contact email.");
+    if (pw.length < 8) return showError("Password must be at least 8 characters.");
+    if (pw !== pw2) return showError("Passwords don't match.");
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Registering…";
+
+    try {
+      // 1. Create (or sign into) the admin login.
+      let user;
+      try {
+        ({ user } = await createUserWithEmailAndPassword(auth, email, pw));
+      } catch (err) {
+        if (err.code === "auth/email-already-in-use") {
+          // Same person retrying after a partial failure — let them through
+          // with the same credentials; anyone else gets wrong-password.
+          try {
+            ({ user } = await signInWithEmailAndPassword(auth, email, pw));
+          } catch {
+            throw err;
+          }
+        } else { throw err; }
+      }
+
+      // 2. Pick a unique group key.
+      let key = makeGroupKey(name);
+      for (let i = 0; i < 5 && await keyIsTaken(key); i++) key = makeGroupKey(name);
+
+      // 3. Create the pending organization document.
+      await addDoc(collection(db, "organizations"), {
+        name,
+        group_key: key,
+        location,
+        admin_email: email,
+        admin_uid: user.uid,
+        plan_tier: "basic",
+        active: false,          // activated manually after review
+        max_seats: 0,           // set manually at activation
+        current_seats: 0,
+        member_ids: [],
+        expires_at: null,
+        created_at: serverTimestamp(),
+        source: "website"
+      });
+
+      // 4. Show success.
+      document.getElementById("okOrgName").textContent = name;
+      document.getElementById("okEmail").textContent = email;
+      document.getElementById("okKey").textContent = key;
+      form.style.display = "none";
+      document.getElementById("successBox").style.display = "block";
+      document.getElementById("stepLabel").textContent = "Pending activation";
+    } catch (err) {
+      console.error(err);
+      showError(AUTH_ERRORS[err.code] || "Something went wrong registering your organization. Please try again, or contact support via the Support page.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Register organization";
+    }
+  });
+
+  document.getElementById("copyKey").addEventListener("click", async () => {
+    const btn = document.getElementById("copyKey");
+    await navigator.clipboard.writeText(document.getElementById("okKey").textContent);
+    btn.textContent = "Copied ✓";
+    setTimeout(() => btn.textContent = "Copy", 1600);
+  });
+</script>
+
+</body>
+</html>

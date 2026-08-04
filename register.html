@@ -124,11 +124,11 @@
     <div>
       <div class="eyebrow">For teams, camps &amp; clubs</div>
       <h1>Register your<br><span class="em">organization.</span></h1>
-      <p class="lede">Give every athlete in your program access to JUMPR's AI shot analysis under one group key. Register below — we review each organization and activate it, usually within one business day.</p>
+      <p class="lede">Give every athlete in your program access to JUMPR's AI shot analysis under one group key. Register below and your organization is live immediately — athletes can join the moment you're done.</p>
       <div class="perks">
         <div class="perk"><span class="dot">01</span><div><h3>One group key</h3><p>Your athletes download JUMPR and enter your key — no individual subscriptions to manage.</p></div></div>
-        <div class="perk"><span class="dot">02</span><div><h3>Seats that fit your roster</h3><p>Pick how many athletes can join with your key — we confirm the count when we activate you.</p></div></div>
-        <div class="perk"><span class="dot">03</span><div><h3>Manual review, real humans</h3><p>Every organization is verified before activation. We'll reach out at your contact email to confirm details and seats.</p></div></div>
+        <div class="perk"><span class="dot">02</span><div><h3>Seats that fit your roster</h3><p>Pick how many athletes can join with your key — up to 500 per organization.</p></div></div>
+        <div class="perk"><span class="dot">03</span><div><h3>Live in seconds</h3><p>No waiting, no approval queue. Finish the form, share your key, and your roster can start filming.</p></div></div>
       </div>
     </div>
 
@@ -175,13 +175,13 @@
         </div>
 
         <button class="btn btn-primary lg" id="submitBtn" type="submit">Register organization</button>
-        <p class="fineprint">By registering you agree to our <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>. Your organization starts in a pending state and is activated after a quick manual review.</p>
+        <p class="fineprint">By registering you agree to our <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>.</p>
       </form>
 
       <div class="success" id="successBox">
         <div class="check"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h2>Registration received</h2>
-        <p><span id="okOrgName" style="color:var(--ink);font-weight:600"></span> is registered and pending activation. We'll email <span id="okEmail" style="color:var(--ink);font-weight:600"></span> once your organization is verified and your seats are set up.</p>
+        <h2>You're live</h2>
+        <p><span id="okOrgName" style="color:var(--ink);font-weight:600"></span> is registered and active. Share the group key below with your athletes — anything organization-related goes to <span id="okEmail" style="color:var(--ink);font-weight:600"></span>.</p>
         <div class="keybox">
           <div>
             <div style="font-family:'Spline Sans Mono';font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:6px">Your group key</div>
@@ -192,8 +192,8 @@
         <div class="next">
           <h4>What happens next</h4>
           <ol>
-            <li>We verify your organization and confirm seat count by email.</li>
-            <li>Once activated, athletes enter your group key in the JUMPR app.</li>
+            <li>Athletes download JUMPR and enter your group key.</li>
+            <li>Each join takes a seat, up to the roster size you chose.</li>
             <li>Everyone on your roster gets full analysis access.</li>
           </ol>
         </div>
@@ -309,8 +309,8 @@
         admin_email: email,
         admin_uid: user.uid,
         plan_tier: "basic",
-        active: false,          // activated manually after review
-        max_seats: seats,       // requested roster size, confirmed at activation
+        active: true,           // live immediately — registration is self-serve
+        max_seats: seats,
         current_seats: 0,
         member_ids: [],
         expires_at: null,
@@ -324,7 +324,7 @@
       document.getElementById("okKey").textContent = key;
       form.style.display = "none";
       document.getElementById("successBox").style.display = "block";
-      document.getElementById("stepLabel").textContent = "Pending activation";
+      document.getElementById("stepLabel").textContent = "Active";
     } catch (err) {
       console.error(err);
       showError(AUTH_ERRORS[err.code] || "Something went wrong registering your organization. Please try again, or contact support via the Support page.");
